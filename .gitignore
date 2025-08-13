@@ -1,0 +1,18 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild*/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+.vs/
+.idea/
+*.csproj
+*.sln
+*.user
+*.pidb
+*.suo
+*.opendb
+*.VC.db
+.DS_Store
