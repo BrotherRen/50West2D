@@ -1,12 +1,20 @@
 using UnityEngine;
-
+using TMPro; // Add this for TextMeshPro
 
 public class BusController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public Joystick joystick;
 
+    [Header("Health System")]
+    public bool isInvulnerable = false;
+    public float invulnerabilityTime = 1f;
+
+    [Header("Health Manager")]
+    public HealthManager healthManager; // Reference to the health manager script
+
     private Rigidbody2D rb;
+    private float invulnerabilityTimer = 0f;
 
     // Movement boundaries
     private float minX = -7.46f;
@@ -17,6 +25,20 @@ public class BusController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Debug.Log("Bus Controller started - health managed by HealthManager");
+    }
+
+    void Update()
+    {
+        // Handle invulnerability timer
+        if (isInvulnerable)
+        {
+            invulnerabilityTimer -= Time.deltaTime;
+            if (invulnerabilityTimer <= 0f)
+            {
+                isInvulnerable = false;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -38,6 +60,15 @@ public class BusController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Check if it's an obstacle (has ObstacleController script)
+        ObstacleController obstacle = other.GetComponent<ObstacleController>();
+        if (obstacle != null)
+        {
+            TakeDamage(1);
+            obstacle.DestroyObstacle();
+            return;
+        }
+
         // If the object has a PooledObjectMover script, treat it as a pickup
         PooledObjectMover pooledObj = other.GetComponent<PooledObjectMover>();
         if (pooledObj != null)
@@ -46,4 +77,23 @@ public class BusController : MonoBehaviour
             pooledObj.ReturnToPool();
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        if (isInvulnerable) return;
+
+        // Tell the health manager to handle damage
+        if (healthManager != null)
+        {
+            healthManager.TakeDamage(damage);
+        }
+        
+        Debug.Log($"Bus took {damage} damage!");
+        
+        // Set invulnerability
+        isInvulnerable = true;
+        invulnerabilityTimer = invulnerabilityTime;
+    }
+
+    // Health is now managed by HealthManager script
 }

@@ -1,0 +1,919 @@
+fileFormatVersion: 2
+guid: fe0720a7d5c989242bdc657034dfbee2
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1295
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b55af08c802a3504ea74673b7eadfd9b
+      internalID: 1800865062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_1
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 1295
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bbf6241cfec75047819c12061d7fa3c
+      internalID: -1403153691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_2
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 1295
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ac603987c40221409a639df765a34ef
+      internalID: -201229567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_3
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 1295
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a83d22d2250c39f449942cb3da2b3afd
+      internalID: 2053749273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_4
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 1295
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 371320cc52067f4479bbe967a72dc62a
+      internalID: 870328899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_5
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 1295
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddc5cfadfc92a5043955540615081d1c
+      internalID: -1629578920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1036
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6256c399fedaaaf46a7bae0117d6611e
+      internalID: -1485338658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_7
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 1036
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a95305c9a431d2d4d83310e0f9cf10fb
+      internalID: 1853786798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_8
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 1036
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 579fe133f3db1da41a35d2f3a1ed522d
+      internalID: -539445007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_9
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 1036
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79f6b4b83a41d874d895367d39a6bcd7
+      internalID: 231766066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_10
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 1036
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d47144c695a5242459f3ca930bcdf60f
+      internalID: -1994506095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_11
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 1036
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b759698ae6eb7f04bbd47fefaf4d69b1
+      internalID: -261060204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 777
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7cbbe99b7e7a314ebad5fe56f76170d
+      internalID: -834444679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_13
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 777
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cfa1f9fd0b711448b3f5743a24400dd
+      internalID: -1916977230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_14
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 777
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fb6fbe8e589a2c46ae8c33db84c4236
+      internalID: -1794559997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_15
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 777
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7caed1932620284dbf437c6b769f1be
+      internalID: 1115172530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_16
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 777
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71518896d2ebbf44ebd10ea4e837846f
+      internalID: -954598850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_17
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 777
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87d1ffac35ea13b4c8228e64a2ea5972
+      internalID: -1805639859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 518
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b1384e32aec90a458256f16decb5511
+      internalID: 1267447714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_19
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 518
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 647de888e3aef0140b510dfc594d5ec0
+      internalID: 1756838869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_20
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 518
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cc27850805763c44aa26ebfcae85fae
+      internalID: 1696230647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_21
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 518
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef283c230784dda4e8f0f4118bc9e00e
+      internalID: -913077144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_22
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 518
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b445fef0a7aee3c49bb3d7cb5814bd73
+      internalID: 560901229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_23
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 518
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9715eb7a354b7e843b8a2fee16bfa2d8
+      internalID: -1590451832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 259
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c172ff703ad1d4195f300856902851
+      internalID: -1868612245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_25
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 259
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10977b9e79e86214e901bdce33bc4855
+      internalID: -671672465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_26
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 259
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d061de75f119ec4489fecde5ca6463e
+      internalID: -960296097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_27
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 259
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a869f9e8e8776f0488bee794d2edb44e
+      internalID: -1107293527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_28
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 259
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8775a4976d680f5499a686ef547fe51e
+      internalID: -1039296026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_29
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 259
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a204bed7c3e1254680067ca8ec9ce0b
+      internalID: 1608096980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c6036636d6e2d845a907d4e4c1f1775
+      internalID: -155356042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_31
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 0
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38caec193d16d984394a17884d7af105
+      internalID: 1052654815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_32
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 0
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b03d967b462fb7f419be006eb1bd99a2
+      internalID: -299215747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_33
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 0
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84d603e3325a42e42bf0b933d82633c9
+      internalID: 1339462420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_34
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 0
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a431c63139892bb46b1142369f26e8bb
+      internalID: -223014058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_35
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 0
+        width: 259
+        height: 259
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a021ac6b1dee57c4990bdad15d4f848e
+      internalID: 11883139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_0: 1800865062
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_1: -1403153691
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_10: -1994506095
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_11: -261060204
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_12: -834444679
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_13: -1916977230
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_14: -1794559997
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_15: 1115172530
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_16: -954598850
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_17: -1805639859
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_18: 1267447714
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_19: 1756838869
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_2: -201229567
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_20: 1696230647
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_21: -913077144
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_22: 560901229
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_23: -1590451832
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_24: -1868612245
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_25: -671672465
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_26: -960296097
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_27: -1107293527
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_28: -1039296026
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_29: 1608096980
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_3: 2053749273
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_30: -155356042
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_31: 1052654815
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_32: -299215747
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_33: 1339462420
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_34: -223014058
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_35: 11883139
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_4: 870328899
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_5: -1629578920
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_6: -1485338658
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_7: 1853786798
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_8: -539445007
+      A-2D-pixel-art-cyclist-sprite-rendered-in-a-vibran-256px-36_9: 231766066
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
