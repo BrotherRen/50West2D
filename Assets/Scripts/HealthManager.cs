@@ -10,8 +10,14 @@ public class HealthManager : MonoBehaviour
     [Header("Health Settings")]
     public int maxHealth = 3;
     
+    [Header("Invulnerability Settings")]
+    public float invulnerabilityDuration = 5f;
+    public GameObject invulnerabilityParticleEffect; // Particle effect when invulnerable
+    public BusController busController; // Reference to the player's BusController
+    
     private int currentHealth;
     private GameObject[] healthBuses;
+    private bool isInvulnerable = false;
     
     void Start()
     {
@@ -73,6 +79,76 @@ public class HealthManager : MonoBehaviour
     {
         currentHealth = maxHealth;
         UpdateHealthDisplay();
+    }
+    
+    // Method to reward a life when player reaches score milestones
+    public void RewardLife()
+    {
+        Debug.Log($"[HealthManager] RewardLife() called! Current health: {currentHealth}/{maxHealth}");
+        
+        if (currentHealth < maxHealth)
+        {
+            // Player has less than max health - restore one life
+            currentHealth++;
+            UpdateHealthDisplay();
+            Debug.Log($"[HealthManager] Life restored! Current health: {currentHealth}/{maxHealth}");
+        }
+        else
+        {
+            // Player is at max health - grant invulnerability instead
+            Debug.Log("[HealthManager] At max health - granting invulnerability instead");
+            StartCoroutine(GrantInvulnerability());
+        }
+    }
+    
+    // Coroutine to grant temporary invulnerability
+    System.Collections.IEnumerator GrantInvulnerability()
+    {
+        if (isInvulnerable)
+        {
+            // Already invulnerable, don't stack
+            yield break;
+        }
+        
+        isInvulnerable = true;
+        
+        // Activate particle effect
+        if (invulnerabilityParticleEffect != null)
+        {
+            invulnerabilityParticleEffect.SetActive(true);
+        }
+        
+        // Set player as invulnerable
+        if (busController != null)
+        {
+            busController.isInvulnerable = true;
+        }
+        
+        Debug.Log($"[HealthManager] Invulnerability granted for {invulnerabilityDuration} seconds!");
+        
+        // Wait for duration
+        yield return new WaitForSeconds(invulnerabilityDuration);
+        
+        // Deactivate particle effect
+        if (invulnerabilityParticleEffect != null)
+        {
+            invulnerabilityParticleEffect.SetActive(false);
+        }
+        
+        // Remove invulnerability from player
+        if (busController != null)
+        {
+            busController.isInvulnerable = false;
+        }
+        
+        isInvulnerable = false;
+        Debug.Log("[HealthManager] Invulnerability ended!");
+    }
+    
+    // Public method to check if currently invulnerable
+    public bool IsInvulnerable()
+    {
+        return isInvulnerable;
     }
 }
 
