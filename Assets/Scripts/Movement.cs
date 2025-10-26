@@ -3,8 +3,14 @@ using TMPro; // Add this for TextMeshPro
 
 public class BusController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    [Header("Movement Settings")]
+    public float moveSpeed = 4f;
     public Joystick joystick;
+    
+    [Header("Speed Upgrade System")]
+    public float baseSpeed = 4f;
+    public float maxSpeed = 5f;
+    public float speedIncreasePerTank = 0.2f; // (5 - 4) / 5 = 0.2 per tank
 
     [Header("Health System")]
     public bool isInvulnerable = false;
@@ -15,6 +21,7 @@ public class BusController : MonoBehaviour
 
     private Rigidbody2D rb;
     private float invulnerabilityTimer = 0f;
+    private int gasTanksCollected = 0;
 
     // Movement boundaries
     private float minX = -7.46f;
@@ -25,7 +32,25 @@ public class BusController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        moveSpeed = baseSpeed; // Start at base speed
         Debug.Log("Bus Controller started - health managed by HealthManager");
+        Debug.Log($"[BusController] Starting speed: {moveSpeed}, Max speed: {maxSpeed}");
+    }
+    
+    // Method to increase speed when collecting gas tanks
+    public void IncreaseSpeed()
+    {
+        if (gasTanksCollected < 5 && moveSpeed < maxSpeed)
+        {
+            gasTanksCollected++;
+            moveSpeed = Mathf.Min(maxSpeed, baseSpeed + (speedIncreasePerTank * gasTanksCollected));
+            
+            Debug.Log($"[BusController] Speed increased! Tanks: {gasTanksCollected}/5, Speed: {moveSpeed}");
+        }
+        else
+        {
+            Debug.Log("[BusController] Already at max speed!");
+        }
     }
 
     void Update()

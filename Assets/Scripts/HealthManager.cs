@@ -15,9 +15,14 @@ public class HealthManager : MonoBehaviour
     public GameObject invulnerabilityParticleEffect; // Particle effect when invulnerable
     public BusController busController; // Reference to the player's BusController
     
+    [Header("Fuel System")]
+    public FuelBarManager fuelBarManager; // Reference to fuel bar manager
+    public int damagePerFuelLoss = 2; // How many hits before losing fuel
+    
     private int currentHealth;
     private GameObject[] healthBuses;
     private bool isInvulnerable = false;
+    private int damageCounter = 0; // Track damage for fuel loss
     
     void Start()
     {
@@ -36,6 +41,23 @@ public class HealthManager : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth);
         
         UpdateHealthDisplay();
+        
+        // Track damage for fuel loss (lose fuel every 2 hits)
+        damageCounter++;
+        if (damageCounter >= damagePerFuelLoss)
+        {
+            damageCounter = 0; // Reset counter
+            
+            if (fuelBarManager != null)
+            {
+                fuelBarManager.RemoveFuel();
+                Debug.Log("[HealthManager] Player lost fuel after 2 hits!");
+            }
+        }
+        else
+        {
+            Debug.Log($"[HealthManager] Damage taken ({damageCounter}/{damagePerFuelLoss} hits toward fuel loss)");
+        }
         
         // Check if game over
         if (currentHealth <= 0)

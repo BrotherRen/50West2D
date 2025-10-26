@@ -9,6 +9,10 @@ public class ObjectPool : MonoBehaviour
 
     [Header("Rare (30%) Prefabs - Optional")]
     public List<GameObject> rarePrefabs;
+    
+    [Header("Gas Tank Spawning")]
+    public GameObject gasTankPrefab;
+    public float gasTankSpawnInterval = 15f; // Spawn gas tank every X seconds
 
     [Header("Early Obstacles (0-25s) - Available from Start")]
     public List<GameObject> earlyObstaclePrefabs;
@@ -21,18 +25,20 @@ public class ObjectPool : MonoBehaviour
 
     [Header("Obstacle Spawn Settings")]
     public float obstacleSpawnInterval = 3f;
+    public float spawnIntervalDecreaseAmount = 0.2f; // How much faster to spawn each milestone
+    public float minimumSpawnInterval = 1f; // Fastest possible spawn rate
     
-    [Header("Multiple Spawn Milestones")]
-    [Tooltip("After 1 minute, spawn 2 obstacles per interval")]
-    public float doubleSpawnTime = 60f;
-    [Tooltip("After 2 minutes, spawn 3 obstacles per interval")]
-    public float tripleSpawnTime = 120f;
+    [Header("Spawn Lane Positions")]
+    [Tooltip("Y position for high lane obstacles (based on player max Y: 1.37)")]
+    public float highLaneY = 1.2f;
+    [Tooltip("Y position for low lane obstacles (based on player min Y: -0.73)")]
+    public float lowLaneY = -0.6f;
+    [Tooltip("Random variance for lane positions (±)")]
+    public float laneVariance = 0.1f;
     
-    [Header("Spawn Position Variance")]
-    [Tooltip("Minimum Y distance between multiple spawned obstacles")]
-    public float minYDistance = 0.8f;
-    [Tooltip("Optional X position variance for multiple spawns (0 = same X)")]
-    public float spawnXVariance = 0.5f;
+    [Header("Progressive Spawn Rate")]
+    [Tooltip("Every X seconds, spawn obstacles faster")]
+    public float spawnRateIncreaseInterval = 40f;
     
     [Header("Legacy Obstacle Prefabs (Deprecated)")]
     public List<GameObject> obstaclePrefabs;
@@ -42,14 +48,17 @@ public class ObjectPool : MonoBehaviour
 
     private Queue<GameObject> pool = new Queue<GameObject>();
     private Queue<GameObject> obstaclePool = new Queue<GameObject>();
+    private Queue<GameObject> gasTankPool = new Queue<GameObject>();
     private List<GameObject> activeObstaclePrefabs = new List<GameObject>(); // Current available obstacles
     private float timer = 0f;
     private float obstacleTimer = 0f;
+    private float gasTankTimer = 0f;
     private float gameTime = 0f;
     private bool midGameUnlocked = false;
     private bool lateGameUnlocked = false;
-    private int obstaclesPerSpawn = 1; // How many obstacles to spawn per interval
-    private GameObject lastSpawnedObstacle = null; // Track last spawned obstacle to avoid duplicates
+    private float currentObstacleSpawnInterval; // Current spawn interval (decreases over time)
+    private float nextSpawnRateIncrease = 0f; // When to increase spawn rate next
+    private string lastSpawnedObstacleType = ""; // Track last spawned obstacle type name
 
     void Start()
     {
@@ -72,6 +81,23 @@ public class ObjectPool : MonoBehaviour
         
         // Initialize obstacle pool with early obstacles
         InitializeObstaclePool(activeObstaclePrefabs, obstaclePool, "Initial");
+        
+        // Initialize gas tank pool
+        if (gasTankPrefab != null)
+        {
+            for (int i = 0; i < 5; i++) // Smaller pool for gas tanks
+            {
+                GameObject obj = Instantiate(gasTankPrefab, transform);
+                obj.SetActive(false);
+                
+                var gasTank = obj.GetComponent<GasTankPickup>();
+                if (gasTank != null)
+                    gasTank.Initialize(this);
+                
+                gasTankPool.Enqueue(obj);
+            }
+            Debug.Log($"[ObjectPool] Gas tank pool initialized with 5 objects");
+        }
 
         // Initialize legacy obstacle pool (for backward compatibility)
         if (obstaclePrefabs.Count > 0)
@@ -79,9 +105,32 @@ public class ObjectPool : MonoBehaviour
             Debug.LogWarning("[ObjectPool] Legacy obstacle prefabs detected. Please migrate to the new system (Early/Mid/Late obstacles).");
         }
         
+        // Initialize spawn rate
+        currentObstacleSpawnInterval = obstacleSpawnInterval;
+        nextSpawnRateIncrease = spawnRateIncreaseInterval;
+        
         Debug.Log($"[ObjectPool] Starting with {activeObstaclePrefabs.Count} early obstacle types");
-        Debug.Log("[ObjectPool] Mid-game obstacles unlock at 25s, Late-game at 50s");
-        Debug.Log($"[ObjectPool] Spawn multipliers: x2 at {doubleSpawnTime}s, x3 at {tripleSpawnTime}s");
+        
+        // Check if mid/late game obstacles are assigned
+        if (midGameObstaclePrefabs.Count == 0)
+        {
+            Debug.LogWarning("[ObjectPool] No Mid-Game obstacle prefabs assigned!");
+        }
+        else
+        {
+            Debug.Log($"[ObjectPool] {midGameObstaclePrefabs.Count} mid-game obstacle types will unlock at 25s");
+        }
+        
+        if (lateGameObstaclePrefabs.Count == 0)
+        {
+            Debug.LogWarning("[ObjectPool] No Late-Game obstacle prefabs assigned!");
+        }
+        else
+        {
+            Debug.Log($"[ObjectPool] {lateGameObstaclePrefabs.Count} late-game obstacle types will unlock at 50s");
+        }
+        
+        Debug.Log($"[ObjectPool] Spawn rate increases every {spawnRateIncreaseInterval}s (decreasing interval by {spawnIntervalDecreaseAmount}s)");
     }
 
     void Update()
@@ -94,6 +143,10 @@ public class ObjectPool : MonoBehaviour
         {
             midGameUnlocked = true;
             activeObstaclePrefabs.AddRange(midGameObstaclePrefabs);
+            
+            // Add mid-game obstacles to the pool
+            InitializeObstaclePool(midGameObstaclePrefabs, obstaclePool, "Mid-Game");
+            
             Debug.Log($"[ObjectPool] Mid-game obstacles UNLOCKED! Now {activeObstaclePrefabs.Count} obstacle types available");
         }
         
@@ -102,19 +155,20 @@ public class ObjectPool : MonoBehaviour
         {
             lateGameUnlocked = true;
             activeObstaclePrefabs.AddRange(lateGameObstaclePrefabs);
+            
+            // Add late-game obstacles to the pool
+            InitializeObstaclePool(lateGameObstaclePrefabs, obstaclePool, "Late-Game");
+            
             Debug.Log($"[ObjectPool] Late-game obstacles UNLOCKED! Now {activeObstaclePrefabs.Count} obstacle types available");
         }
         
-        // Update obstacles per spawn based on time milestones
-        if (gameTime >= tripleSpawnTime && obstaclesPerSpawn < 3)
+        // Progressively increase spawn rate every X seconds
+        if (gameTime >= nextSpawnRateIncrease && currentObstacleSpawnInterval > minimumSpawnInterval)
         {
-            obstaclesPerSpawn = 3;
-            Debug.Log("[ObjectPool] TRIPLE SPAWN ACTIVATED! Now spawning 3 obstacles per interval!");
-        }
-        else if (gameTime >= doubleSpawnTime && obstaclesPerSpawn < 2)
-        {
-            obstaclesPerSpawn = 2;
-            Debug.Log("[ObjectPool] DOUBLE SPAWN ACTIVATED! Now spawning 2 obstacles per interval!");
+            currentObstacleSpawnInterval = Mathf.Max(minimumSpawnInterval, currentObstacleSpawnInterval - spawnIntervalDecreaseAmount);
+            
+            nextSpawnRateIncrease = gameTime + spawnRateIncreaseInterval;
+            Debug.Log($"[ObjectPool] SPAWN RATE INCREASED! Now spawning every {currentObstacleSpawnInterval}s");
         }
         
         // Food spawning timer
@@ -127,22 +181,36 @@ public class ObjectPool : MonoBehaviour
             GetFromPool(spawnPos);
         }
 
-        // Obstacle spawning timer (spawns multiple obstacles based on time)
+        // Obstacle spawning timer (progressively faster)
         if (activeObstaclePrefabs.Count > 0)
         {
             obstacleTimer += Time.deltaTime;
-            if (obstacleTimer >= obstacleSpawnInterval)
+            if (obstacleTimer >= currentObstacleSpawnInterval)
             {
                 obstacleTimer = 0f;
 
-                // Generate well-spaced spawn positions
-                List<Vector2> spawnPositions = GenerateSpawnPositions(obstaclesPerSpawn);
+                // Randomly choose high or low lane
+                float yPos = Random.value > 0.5f ? highLaneY : lowLaneY;
                 
-                // Spawn multiple obstacles at different positions
-                for (int i = 0; i < obstaclesPerSpawn; i++)
-                {
-                    GetObstacleFromPool(spawnPositions[i], i > 0); // Avoid duplicates after first spawn
-                }
+                // Add small variance to make it less rigid
+                yPos += Random.Range(-laneVariance, laneVariance);
+                
+                Vector2 spawnPos = new Vector2(11f, yPos);
+                GetObstacleFromPool(spawnPos);
+            }
+        }
+        
+        // Gas tank spawning timer (spawns continuously)
+        if (gasTankPrefab != null)
+        {
+            gasTankTimer += Time.deltaTime;
+            if (gasTankTimer >= gasTankSpawnInterval)
+            {
+                gasTankTimer = 0f;
+
+                // Spawn gas tanks in middle lane for easier collection
+                Vector2 spawnPos = new Vector2(11f, Random.Range(-0.2f, 0.4f));
+                GetGasTankFromPool(spawnPos);
             }
         }
     }
@@ -192,53 +260,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    // Helper method to generate well-spaced spawn positions for multiple obstacles
-    List<Vector2> GenerateSpawnPositions(int count)
-    {
-        List<Vector2> positions = new List<Vector2>();
-        List<float> usedYPositions = new List<float>();
-        
-        float minY = -1f;
-        float maxY = 1.4f;
-        float baseX = 11f;
-        
-        for (int i = 0; i < count; i++)
-        {
-            float yPos = 0f;
-            int attempts = 0;
-            bool validPosition = false;
-            
-            // Try to find a Y position that's far enough from existing positions
-            while (!validPosition && attempts < 20)
-            {
-                yPos = Random.Range(minY, maxY);
-                validPosition = true;
-                
-                // Check distance from all previously used Y positions
-                foreach (float usedY in usedYPositions)
-                {
-                    if (Mathf.Abs(yPos - usedY) < minYDistance)
-                    {
-                        validPosition = false;
-                        break;
-                    }
-                }
-                
-                attempts++;
-            }
-            
-            usedYPositions.Add(yPos);
-            
-            // Add X variance for more spread
-            float xPos = baseX + Random.Range(-spawnXVariance, spawnXVariance);
-            
-            positions.Add(new Vector2(xPos, yPos));
-        }
-        
-        return positions;
-    }
-
-    public GameObject GetObstacleFromPool(Vector2 position, bool avoidDuplicate = false)
+    public GameObject GetObstacleFromPool(Vector2 position)
     {
         if (activeObstaclePrefabs.Count == 0)
         {
@@ -250,32 +272,50 @@ public class ObjectPool : MonoBehaviour
         {
             GameObject obj = obstaclePool.Dequeue();
             
-            // If avoiding duplicates and this is the same as last spawned, try to find a different one
-            if (avoidDuplicate && lastSpawnedObstacle != null && obstaclePool.Count > 0)
+            // Try to avoid spawning the same obstacle type consecutively
+            if (obstaclePool.Count > 2 && !string.IsNullOrEmpty(lastSpawnedObstacleType))
             {
-                // Check if this object matches the last spawned prefab
-                bool isDuplicate = obj.name.Replace("(Clone)", "").Trim() == lastSpawnedObstacle.name;
+                string currentObstacleType = obj.name.Replace("(Clone)", "").Trim();
                 
-                if (isDuplicate)
+                // If this is the same as the last spawned obstacle, try to find a different one
+                if (currentObstacleType == lastSpawnedObstacleType)
                 {
-                    // Put it back and try to get a different one
-                    obstaclePool.Enqueue(obj);
+                    // Put it back and try up to 5 times to get a different obstacle
+                    List<GameObject> tempList = new List<GameObject>();
+                    tempList.Add(obj);
                     
-                    // Try up to 3 times to get a different obstacle
-                    for (int attempt = 0; attempt < 3 && obstaclePool.Count > 0; attempt++)
+                    bool foundDifferent = false;
+                    for (int attempt = 0; attempt < 5 && obstaclePool.Count > 0; attempt++)
                     {
                         obj = obstaclePool.Dequeue();
-                        isDuplicate = obj.name.Replace("(Clone)", "").Trim() == lastSpawnedObstacle.name;
+                        currentObstacleType = obj.name.Replace("(Clone)", "").Trim();
                         
-                        if (!isDuplicate)
+                        if (currentObstacleType != lastSpawnedObstacleType)
+                        {
+                            foundDifferent = true;
                             break;
+                        }
                         else
-                            obstaclePool.Enqueue(obj);
+                        {
+                            tempList.Add(obj);
+                        }
+                    }
+                    
+                    // Put back the ones we didn't use
+                    foreach (GameObject tempObj in tempList)
+                    {
+                        if (tempObj != obj) // Don't put back the one we're using
+                        {
+                            obstaclePool.Enqueue(tempObj);
+                        }
                     }
                 }
             }
             
             obj.transform.position = position;
+            
+            // Track this obstacle type
+            lastSpawnedObstacleType = obj.name.Replace("(Clone)", "").Trim();
             
             // Reset state BEFORE activating the object
             // Initialize ObstacleController
@@ -305,61 +345,81 @@ public class ObjectPool : MonoBehaviour
             // Activate the object AFTER resetting state
             obj.SetActive(true);
 
-            // Track for duplicate avoidance
-            lastSpawnedObstacle = activeObstaclePrefabs.Find(prefab => 
-                obj.name.Replace("(Clone)", "").Trim() == prefab.name);
-
             return obj;
         }
         else
         {
-            // Create new obstacle if pool is empty - select from active obstacles
-            GameObject obstaclePrefab = SelectObstaclePrefab(avoidDuplicate);
+            // Create new obstacle if pool is empty - try to avoid duplicates
+            GameObject obstaclePrefab;
+            
+            if (activeObstaclePrefabs.Count > 1 && !string.IsNullOrEmpty(lastSpawnedObstacleType))
+            {
+                // Try to pick a different obstacle type
+                int attempts = 0;
+                do
+                {
+                    obstaclePrefab = activeObstaclePrefabs[Random.Range(0, activeObstaclePrefabs.Count)];
+                    attempts++;
+                }
+                while (obstaclePrefab.name == lastSpawnedObstacleType && attempts < 5);
+            }
+            else
+            {
+                obstaclePrefab = activeObstaclePrefabs[Random.Range(0, activeObstaclePrefabs.Count)];
+            }
+            
             GameObject obj = Instantiate(obstaclePrefab, position, Quaternion.identity);
+            
+            // Track this obstacle type
+            lastSpawnedObstacleType = obstaclePrefab.name;
             
             // Initialize the appropriate controller
             obj.GetComponent<ObstacleController>()?.Initialize(this);
             obj.GetComponent<BouncingTireController>()?.Initialize(this);
             obj.GetComponent<SimpleBouncingTire>()?.Initialize(this);
             
-            lastSpawnedObstacle = obstaclePrefab;
             return obj;
         }
     }
-    
-    // Helper method to select an obstacle prefab, optionally avoiding duplicates
-    GameObject SelectObstaclePrefab(bool avoidDuplicate)
+
+    // Get gas tank from pool
+    public GameObject GetGasTankFromPool(Vector2 position)
     {
-        if (activeObstaclePrefabs.Count == 0)
+        if (gasTankPool.Count > 0)
         {
-            Debug.LogError("[ObjectPool] No active obstacle prefabs!");
-            return null;
+            GameObject obj = gasTankPool.Dequeue();
+            obj.transform.position = position;
+            
+            var gasTank = obj.GetComponent<GasTankPickup>();
+            if (gasTank != null)
+            {
+                gasTank.Initialize(this);
+                gasTank.ResetState();
+            }
+            
+            obj.SetActive(true);
+            Debug.Log($"[ObjectPool] Gas tank spawned at {position}");
+            return obj;
         }
-        
-        // If we only have 1 obstacle type or not avoiding duplicates, just pick randomly
-        if (activeObstaclePrefabs.Count == 1 || !avoidDuplicate || lastSpawnedObstacle == null)
+        else
         {
-            return activeObstaclePrefabs[Random.Range(0, activeObstaclePrefabs.Count)];
+            // Create new gas tank if pool is empty
+            GameObject obj = Instantiate(gasTankPrefab, position, Quaternion.identity);
+            obj.GetComponent<GasTankPickup>()?.Initialize(this);
+            Debug.Log($"[ObjectPool] Gas tank created (pool empty) at {position}");
+            return obj;
         }
-        
-        // Try to pick a different obstacle than the last one
-        GameObject selectedPrefab;
-        int attempts = 0;
-        
-        do
-        {
-            selectedPrefab = activeObstaclePrefabs[Random.Range(0, activeObstaclePrefabs.Count)];
-            attempts++;
-        }
-        while (selectedPrefab == lastSpawnedObstacle && attempts < 10);
-        
-        return selectedPrefab;
     }
 
     public void ReturnToPool(GameObject obj)
     {
-        // Check if it's an obstacle (any type) or food item
-        if (obj.GetComponent<ObstacleController>() != null || 
+        // Check what type of object it is
+        if (obj.GetComponent<GasTankPickup>() != null)
+        {
+            obj.SetActive(false);
+            gasTankPool.Enqueue(obj);
+        }
+        else if (obj.GetComponent<ObstacleController>() != null || 
             obj.GetComponent<BouncingTireController>() != null || 
             obj.GetComponent<SimpleBouncingTire>() != null)
         {
@@ -378,33 +438,42 @@ public class ObjectPool : MonoBehaviour
     {
         if (prefabs.Count > 0)
         {
-            for (int i = 0; i < poolSize; i++)
+            // Create a balanced distribution of obstacle types
+            int objectsPerPrefab = Mathf.Max(2, poolSize / prefabs.Count); // At least 2 of each type
+            int objectsCreated = 0;
+            
+            // Create multiple instances of each prefab for variety
+            foreach (GameObject prefab in prefabs)
             {
-                GameObject obstaclePrefab = prefabs[Random.Range(0, prefabs.Count)];
-                GameObject obj = Instantiate(obstaclePrefab, transform);
-                obj.SetActive(false);
-
-                // Check for ObstacleController first
-                var obstacle = obj.GetComponent<ObstacleController>();
-                if (obstacle != null)
-                    obstacle.Initialize(this);
-                
-                // Check for SimpleBouncingTire
-                var simpleBouncingTire = obj.GetComponent<SimpleBouncingTire>();
-                if (simpleBouncingTire != null)
+                for (int j = 0; j < objectsPerPrefab && objectsCreated < poolSize; j++)
                 {
-                    simpleBouncingTire.Initialize(this);
-                    Debug.Log($"{poolName} SimpleBouncingTire found and initialized!");
-                }
-                
-                // Check for BouncingTireController (legacy)
-                var bouncingTire = obj.GetComponent<BouncingTireController>();
-                if (bouncingTire != null)
-                    bouncingTire.Initialize(this);
+                    GameObject obj = Instantiate(prefab, transform);
+                    obj.SetActive(false);
 
-                pool.Enqueue(obj);
+                    // Check for ObstacleController first
+                    var obstacle = obj.GetComponent<ObstacleController>();
+                    if (obstacle != null)
+                        obstacle.Initialize(this);
+                    
+                    // Check for SimpleBouncingTire
+                    var simpleBouncingTire = obj.GetComponent<SimpleBouncingTire>();
+                    if (simpleBouncingTire != null)
+                    {
+                        simpleBouncingTire.Initialize(this);
+                        Debug.Log($"{poolName} SimpleBouncingTire ({prefab.name}) found and initialized!");
+                    }
+                    
+                    // Check for BouncingTireController (legacy)
+                    var bouncingTire = obj.GetComponent<BouncingTireController>();
+                    if (bouncingTire != null)
+                        bouncingTire.Initialize(this);
+
+                    pool.Enqueue(obj);
+                    objectsCreated++;
+                }
             }
-            Debug.Log($"{poolName} obstacle pool initialized with {poolSize} objects");
+            
+            Debug.Log($"{poolName} obstacle pool initialized with {objectsCreated} objects from {prefabs.Count} prefab types");
         }
     }
 
